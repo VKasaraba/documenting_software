@@ -43,14 +43,14 @@ COMPENSATION_TYPE_SERIALIZER_DICT = {
 
 class CompensationRequestSerializer(serializers.ModelSerializer):
     compensation_info = serializers.SerializerMethodField()
-    
+
 
     class Meta:
         model = CompensationRequest
         fields = '__all__'
 
     def get_compensation_info(self, obj):
-        user =  self.context['request'].user
+        user = self.context['request'].user
         info_obj = obj.get_compensation_info_obj(user)
         serializer_class = COMPENSATION_TYPE_SERIALIZER_DICT[obj.compensation_type]
         return serializer_class(info_obj).data

@@ -15,11 +15,21 @@ class CompensationRequestListCreateAPIView(ListCreateAPIView):
     permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
-        return CompensationRequest.objects.all()
+        compensation_type = self.request.query_params.get('compensation_type')
+
+        user = self.request.user
+        if user.is_manager:
+            qs = CompensationRequest.objects.all()
+        else:
+            qs = CompensationRequest.objects.filter(employee=user)
+        if compensation_type:
+            qs = qs.filter(compensation_type=compensation_type)
+        print(f'\ngot {qs.count()} records\n')
+        return qs
 
     def create(self, request, *args, **kwargs):
         request_data = request.data
-        employee_id = request_data.pop('employee')
+        employee_id = request_data.get('employee')
         # create compensation info object
         info_serializer_class = COMPENSATION_TYPE_SERIALIZER_DICT[request_data.get('compensation_type')]
         info_serializer = info_serializer_class(data=request_data)
@@ -110,7 +120,7 @@ def format_data_by_compensation_type(compensation_type, splitted_values):
 
 
 def create_request_record(request_data):
-    employee_id = request_data.pop('employee')
+    employee_id = request_data.get('employee')
     # create compensation info object
     info_serializer_class = COMPENSATION_TYPE_SERIALIZER_DICT[request_data['compensation_type']]
     info_serializer = info_serializer_class(data=request_data)
@@ -121,8 +131,8 @@ def create_request_record(request_data):
     request_serializer.is_valid(raise_exception=True)
     request_obj = request_serializer.save()
 
-    set_info_to_request(request_obj, info_obj)                      # METHOD INJECTION
-    request_obj.empoloyee = Employee.objects.get(id=employee_id)    # PROPERTY INJECTION
+    set_info_to_request(request_obj, info_obj)                     # METHOD INJECTION
+    request_obj.employee = Employee.objects.get(id=employee_id)    # PROPERTY INJECTION
     request_obj.save()
     return True
 

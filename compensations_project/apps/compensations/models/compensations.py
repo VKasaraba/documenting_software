@@ -82,7 +82,7 @@ class CompensationRequest(models.Model):
     status = models.CharField(max_length=30, choices=CompensationStatus.choices, default=CompensationStatus.PENDING)
 
     def get_employee(self):
-        return self.empoloyee
+        return self.employee
 
     def get_compensation_info_obj(self, user):
         if user.id == self.get_employee().id or user.is_manager:
@@ -95,7 +95,7 @@ class CompensationRequest(models.Model):
 
     def get_requested_money(self, user):
         if user.id == self.get_employee().id or user.is_manager:
-            compensation_obj = self.get_compensation_info_obj
+            compensation_obj = self.get_compensation_info_obj(user)
             return compensation_obj._get_requested_money(employee=self.get_employee())
         else:
             raise PermissionError
