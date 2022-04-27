@@ -6,7 +6,7 @@ import csv
 COMPENSATION_TYPES = ['bonus', 'medical', 'educational', 'sport', 'overtime']
 BONUS_REASONS = ['Event organizations', 'Tech support', 'Mentoring']
 BONUS_CONTACT_PERSONS = ['Mykola Ivankiv', 'Roman Nykolyn', 'Oleg Elechko']
-OVERTIME_TASKS = [1]
+OVERTIME_TASKS = [8, 9, 10, 11, 12]
 SPORT_GYMS = ['Malibu', 'Sport_Life', 'Champion']
 HOSPITALS = ['Lviv Hospital N5', 'Ternopil Regional Hospital', 'Kyiv Hospital N1']
 INTSITUTIONS = ['Standford University', 'Lviv Polytechnic National University', 'Oxford University']
@@ -14,7 +14,7 @@ INTSITUTIONS = ['Standford University', 'Lviv Polytechnic National University', 
 
 def generate_compensation_requests():
     # employee_ids = Employee.objects.filter(is_manager=False).values_list('id', flat=True
-    employee_ids = [4]
+    employee_ids = [4, 5]
     with open('sample_data.csv', 'w') as f:
         writer = csv.writer(f)
         for i in range(round(1000/5)):
