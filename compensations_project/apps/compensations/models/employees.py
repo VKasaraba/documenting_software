@@ -28,7 +28,6 @@ class Employee(AbstractBaseUser):
         self.set_password(raw_password)
         return super().save(*args, **kwargs)
 
-
     def get_full_name(self):
         return f'{self.first_name} {self.last_name}'
 

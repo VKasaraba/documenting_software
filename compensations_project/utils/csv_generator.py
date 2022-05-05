@@ -14,10 +14,10 @@ INTSITUTIONS = ['Standford University', 'Lviv Polytechnic National University', 
 
 def generate_compensation_requests():
     # employee_ids = Employee.objects.filter(is_manager=False).values_list('id', flat=True
-    employee_ids = [4, 5]
+    employee_ids = [4, 5, 7]
     with open('sample_data.csv', 'w') as f:
         writer = csv.writer(f)
-        for i in range(round(1000/5)):
+        for i in range(round(100/4)):
             # BONUS
             request_data = []
             request_data.append('bonus')
@@ -33,19 +33,8 @@ def generate_compensation_requests():
             request_data.append(date)
             contact_person = BONUS_CONTACT_PERSONS[randint(0, 2)]
             request_data.append(contact_person)
-            writer.writerow(request_data)
-
-            # OVERTIME
-            request_data = []
-            request_data.append('overtime')
-            employee = employee_ids[randint(0, len(employee_ids)-1)]
-            request_data.append(employee)
-            date_created = f'202{randint(0, 2)}-0{randint(1, 9)}-0{randint(1, 9)}'
-            request_data.append(date_created)
-            task = OVERTIME_TASKS[randint(0, len(OVERTIME_TASKS)-1)]
-            request_data.append(task)
-            hours = randint(0, 20)
-            request_data.append(hours)
+            bonus_url = f'https://bonus-info'
+            request_data.append(bonus_url)
             writer.writerow(request_data)
 
             # SPORT

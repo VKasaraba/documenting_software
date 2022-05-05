@@ -13,12 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from operator import truediv
 from django.contrib import admin
+from django.shortcuts import redirect, render
 from django.urls import path
+from compensations_project.apps.compensations.models.compensations import CompensationRequest
+from compensations_project.apps.compensations.models.employees import Employee
+from compensations_project.apps.compensations.serializers.compensations_serializers import CompensationRequestSerializer
 from compensations_project.apps.compensations.views.compensation_views import CompensationRequestListCreateAPIView, CompensationRequestRetrieveUpdateAPIView, UploadCompensationCSVFile
 from compensations_project.apps.compensations.views.employees_views import EmployeeListCreateAPIView, EmployeeRetrieveUpdateAPIView, FinancialManagerListCreateAPIView, FinancialManagerRetrieveUpdateAPIView
 from rest_framework_simplejwt import views as jwt_views
-
+from rest_framework_simplejwt.backends import TokenBackend
 from compensations_project.apps.compensations.views.projects_views import ProjectListCreateAPIView, ProjectRetrieveUpdateAPIView, TaskListCreateAPIView, TaskRetrieveUpdateAPIView
 
 
