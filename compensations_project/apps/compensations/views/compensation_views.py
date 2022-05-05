@@ -26,6 +26,7 @@ class CompensationRequestListCreateAPIView(ListCreateAPIView):
         # create compensation request object
         data = request_data
         data.update({'compensation_info_id': info_obj.id})
+        data.update({'employee': data.pop('employee', 4)})
         request_serializer = self.get_serializer(data=data)
         request_serializer.is_valid(raise_exception=True)
         request_serializer.save()

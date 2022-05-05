@@ -17,7 +17,7 @@ def generate_compensation_requests():
     employee_ids = [4, 5, 7]
     with open('sample_data.csv', 'w') as f:
         writer = csv.writer(f)
-        for i in range(round(100/4)):
+        for i in range(round(8/4)):
             # BONUS
             request_data = []
             request_data.append('bonus')
